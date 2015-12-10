@@ -1,4 +1,7 @@
-export default class Cachely extends require('events').EventEmitter {
+'use strict'
+
+// Define
+class Cachely extends require('events').EventEmitter {
 	static create (...args) {
 		return new this(...args)
 	}
@@ -90,3 +93,6 @@ export default class Cachely extends require('events').EventEmitter {
 		return this
 	}
 }
+
+// Export
+module.exports = Cachely
