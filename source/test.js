@@ -1,10 +1,9 @@
-/* eslint no-magic-numbers:0, no-console:0 */
-'use strict'
+/* eslint no-console:0 */
 
 // Import
 const joe = require('joe')
 const {equal, errorEqual} = require('assert-helpers')
-const Cachely = require('../../')
+const Cachely = require('../')
 const oneSecond = 1000
 const twoSeconds = oneSecond * 2
 const threeSeconds = oneSecond * 3

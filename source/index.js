@@ -1,5 +1,3 @@
-'use strict'
-
 // Define
 class Cachely extends require('events').EventEmitter {
 	static create (...args) {
