@@ -1,46 +1,65 @@
-// Define
-class Cachely extends require('events').EventEmitter {
+'use strict'
+
+/**
+Construct our Cachely class, setting the configuration from the options
+@param {Object} opts
+@param {Number} opts.duration - the milliseconds that the cache should be valid for, defaults to one day
+@param {Function} [opts.log] - defaults to `null`, can be a function that receives the arguments: `logLevel`, `...args`
+@param {Function} [opts.retrieve] - the method that fetches the new source data, it should return a promise that resolves the result that will be cached
+@public
+*/
+class Cachely {
+	constructor (opts = {}) {
+		this.duration = opts.duration || require('oneday')
+		this.log = opts.log || function () { }
+		this.retrieve = opts.retrieve
+
+		if (typeof this.retrieve !== 'function') {
+			throw new Error('Cachely requires a retrieve method to be specified that returns a promise')
+		}
+
+		// Private properties
+		this.data = null
+		this.refresh = false
+		this.lastRequested = null
+		this.lastRetrieval = null
+		this.lastUpdated = null
+	}
+
+	/**
+	Creates and returns new instance of the current class
+	@param {...*} args - the arguments to be forwarded along to the constructor
+	@return {Object} The new instance.
+	@static
+	@public
+	*/
 	static create (...args) {
 		return new this(...args)
 	}
 
-	constructor (opts) {
-		super()
-
-		opts = opts || {}
-		this.duration = opts.duration || require('oneday')
-		this.log = opts.log || function () {}
-		this.method = opts.method
-
-		if ( typeof this.method !== 'function' ) {
-			throw new Error('Cachely requires a method to be specified')
-		}
-
-		this.data = null
-		this.retry = false
-		this.lastRequest = null
-		this.lastUpdate = null
-	}
-
-	// returns either 'valid', 'invalid', 'updating', or 'empty'
+	/**
+	Determines whether or not the cache is still valid, by returning its current status
+	@returns {string} - 'valid', 'invalid', 'updating', or 'empty'
+	@private
+	*/
 	validate () {
 		const nowTime = (new Date()).getTime()
 
 		// have we manually invalidated the cache?
-		if ( this.retry ) {
-			this.retry = false
+		if (this.refresh) {
+			this.refresh = false
 			return 'invalid'
 		}
 
 		// have we fetched the data yet?
-		else if ( this.lastUpdate ) {
+		else if (this.lastUpdated) {
 			// yes we have, so let's check if it is still valid
-			// if the current time, minus the cache duration, is than the last time we requested the data, then our cache is invalid
-			return new Date(nowTime - this.duration) < this.lastRequest ? 'valid' : 'invalid'
+			// if the current time, minus the cache duration, is than the last time we retrieved the data, then our cache is invalid
+			return new Date(nowTime - this.duration) < this.lastRequested ? 'valid' : 'invalid'
 		}
 
 		// are we doing the first fetch?
-		else if ( this.lastRequest ) {
+		else if (this.lastRequested) {
 			return 'updating'
 		}
 
@@ -50,45 +69,54 @@ class Cachely extends require('events').EventEmitter {
 		}
 	}
 
+	/**
+	Invalidates the current cache, so that it is retrieved again.
+	Only applies to future resolution requets, does not cancel or modify active retrieval requests.
+	@returns {this}
+	@chainable
+	@public
+	*/
 	invalidate () {
-		this.retry = true
+		this.refresh = true
 		return this
 	}
 
-	// next(err, data)
-	request (next) {
+	/**
+	Resolve the cache, if it is valid use the cache's data, otherwise retrieve new data
+	@returns {Promise<*>}
+	@public
+	*/
+	async resolve () {
 		const cache = this.validate()
-		switch ( cache ) {
+		switch (cache) {
 			case 'valid':
-				this.log('debug', 'Cachely is returning cached data')
-				next(null, this.data)
-				break
+				this.log('debug', 'Cachely has resolved cached data')
+				return this.data
 
 			case 'invalid':
 			case 'empty':
-				this.log('debug', 'Cachely is fetching new data')
-				this.lastRequest = new Date()
-				this.once('update', next)
-				this.method((err, data) => {
-					if ( !err ) {
-						this.data = data
-					}
-					this.lastUpdate = new Date()
-					this.log('debug', 'Cachely has fetched the new data')
-					this.emit('update', err, this.data)
-				})
-				break
+				this.log('debug', 'Cachely must resolve new data')
+				this.lastRequested = new Date()
+				this.lastUpdated = null
+				this.lastRetrieval = Promise.resolve(this.retrieve())
+				try {
+					this.data = await this.lastRetrieval
+					this.lastUpdated = new Date()
+				}
+				catch (err) {
+					this.log('debug', 'Cachely failed to resolve new data')
+					return Promise.reject(err)
+				}
+				this.log('debug', 'Cachely has resolved the new data')
+				return this.data
 
 			case 'updating':
-				this.log('debug', 'Cachely is waiting for new data')
-				this.once('update', next)
-				break
+				this.log('debug', 'Cachely is waiting for the new data to resolve')
+				return this.lastRetrieval
 
 			default:
-				next(new Error('Unknown cache state'))
-				break
+				return Promise.reject(new Error('Unknown cache state'))
 		}
-		return this
 	}
 }
 
