@@ -64,6 +64,8 @@ A tiny wrapper that sits around your request function that caches its data for a
 
 ## Usage
 
+[API Documentation.](http://master.cachely.bevry.surge.sh/docs/)
+
 ``` javascript
 let fetches = 0
 const cachely = require('cachely').create({
