@@ -9,13 +9,15 @@ Construct our Cachely class, setting the configuration from the options
 @public
 */
 class Cachely {
-	constructor (opts = {}) {
+	constructor(opts = {}) {
 		this.duration = opts.duration || require('oneday')
-		this.log = opts.log || function () { }
+		this.log = opts.log || function() {}
 		this.retrieve = opts.retrieve
 
 		if (typeof this.retrieve !== 'function') {
-			throw new Error('Cachely requires a retrieve method to be specified that returns a promise')
+			throw new Error(
+				'Cachely requires a retrieve method to be specified that returns a promise'
+			)
 		}
 
 		// Private properties
@@ -33,7 +35,7 @@ class Cachely {
 	@static
 	@public
 	*/
-	static create (...args) {
+	static create(...args) {
 		return new this(...args)
 	}
 
@@ -42,8 +44,8 @@ class Cachely {
 	@returns {string} - 'valid', 'invalid', 'updating', or 'empty'
 	@private
 	*/
-	validate () {
-		const nowTime = (new Date()).getTime()
+	validate() {
+		const nowTime = new Date().getTime()
 
 		// have we manually invalidated the cache?
 		if (this.refresh) {
@@ -55,7 +57,9 @@ class Cachely {
 		else if (this.lastUpdated) {
 			// yes we have, so let's check if it is still valid
 			// if the current time, minus the cache duration, is than the last time we retrieved the data, then our cache is invalid
-			return new Date(nowTime - this.duration) < this.lastRequested ? 'valid' : 'invalid'
+			return new Date(nowTime - this.duration) < this.lastRequested
+				? 'valid'
+				: 'invalid'
 		}
 
 		// are we doing the first fetch?
@@ -76,7 +80,7 @@ class Cachely {
 	@chainable
 	@public
 	*/
-	invalidate () {
+	invalidate() {
 		this.refresh = true
 		return this
 	}
@@ -86,7 +90,7 @@ class Cachely {
 	@returns {Promise<*>}
 	@public
 	*/
-	async resolve () {
+	async resolve() {
 		const cache = this.validate()
 		switch (cache) {
 			case 'valid':
@@ -102,8 +106,7 @@ class Cachely {
 				try {
 					this.data = await this.lastRetrieval
 					this.lastUpdated = new Date()
-				}
-				catch (err) {
+				} catch (err) {
 					this.log('debug', 'Cachely failed to resolve new data')
 					return Promise.reject(err)
 				}
