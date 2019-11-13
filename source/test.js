@@ -5,7 +5,7 @@
 const kava = require('kava')
 const { equal, errorEqual } = require('assert-helpers')
 const typeChecker = require('typechecker')
-const Cachely = require('../')
+const Cachely = require('./')
 const oneSecond = 1000
 const twoSeconds = oneSecond * 2
 const threeSeconds = oneSecond * 3
