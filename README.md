@@ -13,6 +13,7 @@
 <span class="badge-daviddm"><a href="https://david-dm.org/bevry/cachely" title="View the status of this project's dependencies on DavidDM"><img src="https://img.shields.io/david/bevry/cachely.svg" alt="Dependency Status" /></a></span>
 <span class="badge-daviddmdev"><a href="https://david-dm.org/bevry/cachely#info=devDependencies" title="View the status of this project's development dependencies on DavidDM"><img src="https://img.shields.io/david/dev/bevry/cachely.svg" alt="Dev Dependency Status" /></a></span>
 <br class="badge-separator" />
+<span class="badge-githubsponsors"><a href="https://github.com/sponsors/balupton" title="Donate to this project using GitHub Sponsors"><img src="https://img.shields.io/badge/github-donate-yellow.svg" alt="GitHub Sponsors donate button" /></a></span>
 <span class="badge-patreon"><a href="https://patreon.com/bevry" title="Donate to this project using Patreon"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Patreon donate button" /></a></span>
 <span class="badge-flattr"><a href="https://flattr.com/profile/balupton" title="Donate to this project using Flattr"><img src="https://img.shields.io/badge/flattr-donate-yellow.svg" alt="Flattr donate button" /></a></span>
 <span class="badge-liberapay"><a href="https://liberapay.com/bevry" title="Donate to this project using Liberapay"><img src="https://img.shields.io/badge/liberapay-donate-yellow.svg" alt="Liberapay donate button" /></a></span>
@@ -54,21 +55,10 @@ A tiny wrapper that sits around your request function that caches its data for a
 
 <p>This package is published with the following editions:</p>
 
-<ul><li><code>cachely</code> aliases <code>cachely/source/index.js</code></li>
-<li><code>cachely/source/index.js</code> is esnext source code with require for modules</li>
-<li><code>cachely/edition-browsers/index.js</code> is esnext compiled for browsers with require for modules</li></ul>
-
-<h3><a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a></h3>
-
-This project provides its type information via inline <a href="http://usejsdoc.org" title="JSDoc is an API documentation generator for JavaScript, similar to Javadoc or phpDocumentor">JSDoc Comments</a>. To make use of this in <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a>, set your <code>maxNodeModuleJsDepth</code> compiler option to `5` or thereabouts. You can accomlish this via your `tsconfig.json` file like so:
-
-``` json
-{
-  "compilerOptions": {
-    "maxNodeModuleJsDepth": 5
-  }
-}
-```
+<ul><li><code>cachely/source/index.ts</code> is typescript source code with import for modules</li>
+<li><code>cachely/edition-browsers/index.js</code> is typescript compiled for browsers with import for modules</li>
+<li><code>cachely</code> aliases <code>cachely/edition-node-12/index.js</code></li>
+<li><code>cachely/edition-node-12/index.js</code> is typescript compiled for node.js 12 with require for modules</li></ul>
 
 <!-- /INSTALL -->
 
@@ -77,12 +67,12 @@ This project provides its type information via inline <a href="http://usejsdoc.o
 
 [API Documentation.](http://master.cachely.bevry.surge.sh/docs/)
 
-``` javascript
+```javascript
 let fetches = 0
 const cachely = require('cachely').create({
     // The method that will fetch the data
-    retrieve () {
-        return new Promise(function (resolve) {
+    retrieve() {
+        return new Promise(function(resolve) {
             // after a one second delay, return the number of fetches that we have done
             setTimeout(() => resolve(++fetches), 1000)
         })
@@ -91,7 +81,7 @@ const cachely = require('cachely').create({
     // An optional duration in milliseconds that our cache of the data will be valid for
     // When expired, on the next request of the data, we will use the method to get the latest data
     // Defaults to one day
-    duration: 2000,  // in this example we set it to two seconds
+    duration: 2000, // in this example we set it to two seconds
 
     // An optional function that receives debugging log messages
     // Defaults to nothing
@@ -99,29 +89,76 @@ const cachely = require('cachely').create({
 })
 
 // do an initial fetch of the dat
-cachely.resolve().catch(console.error).then(console.log.bind(console, 'after one second as specified in our method, the result data should still be 1:'))
+cachely
+    .resolve()
+    .catch(console.error)
+    .then(
+        console.log.bind(
+            console,
+            'after one second as specified in our method, the result data should still be 1:'
+        )
+    )
 
 // do a subsequent fetch of the data that will be from the cach
-cachely.resolve().catch(console.error).then(console.log.bind(console, 'after a tiny delay this will be from cache, the result data should still be 1:'))
+cachely
+    .resolve()
+    .catch(console.error)
+    .then(
+        console.log.bind(
+            console,
+            'after a tiny delay this will be from cache, the result data should still be 1:'
+        )
+    )
 
 // wait for the cache to invalidate itself
-setTimeout(function () {
+setTimeout(function() {
     // do an second fetch of the data
-    cachely.resolve().catch(console.error).then(console.log.bind(console, 'after one second as specified in our method, the result data should be 2, as it was our second fetch:'))
+    cachely
+        .resolve()
+        .catch(console.error)
+        .then(
+            console.log.bind(
+                console,
+                'after one second as specified in our method, the result data should be 2, as it was our second fetch:'
+            )
+        )
 
     // do a subsequent fetch of the data that will be from the cache
-    cachely.resolve().catch(console.error).then(console.log.bind(console, 'after a tiny delay this will be from cache, the result data should still be 2:'))
+    cachely
+        .resolve()
+        .catch(console.error)
+        .then(
+            console.log.bind(
+                console,
+                'after a tiny delay this will be from cache, the result data should still be 2:'
+            )
+        )
 
     // peform a manual invalidation
     cachely.invalidate()
 
     // do a third fetch of the data
-    cachely.resolve().catch(console.error).then(console.log.bind(console, 'after one second as specified in our method, the result data should be 3, as it was our third fetch:'))
+    cachely
+        .resolve()
+        .catch(console.error)
+        .then(
+            console.log.bind(
+                console,
+                'after one second as specified in our method, the result data should be 3, as it was our third fetch:'
+            )
+        )
 
     // do a subsequent fetch of the data that will be from the cache
-    cachely.resolve().catch(console.error).then(console.log.bind(console, 'after a tiny delay this will be from cache, the result data should still be 3:'))
+    cachely
+        .resolve()
+        .catch(console.error)
+        .then(
+            console.log.bind(
+                console,
+                'after a tiny delay this will be from cache, the result data should still be 3:'
+            )
+        )
 }, 3000)
-
 ```
 
 <!-- HISTORY/ -->
@@ -156,6 +193,7 @@ These amazing people are maintaining this project:
 
 No sponsors yet! Will you be the first?
 
+<span class="badge-githubsponsors"><a href="https://github.com/sponsors/balupton" title="Donate to this project using GitHub Sponsors"><img src="https://img.shields.io/badge/github-donate-yellow.svg" alt="GitHub Sponsors donate button" /></a></span>
 <span class="badge-patreon"><a href="https://patreon.com/bevry" title="Donate to this project using Patreon"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Patreon donate button" /></a></span>
 <span class="badge-flattr"><a href="https://flattr.com/profile/balupton" title="Donate to this project using Flattr"><img src="https://img.shields.io/badge/flattr-donate-yellow.svg" alt="Flattr donate button" /></a></span>
 <span class="badge-liberapay"><a href="https://liberapay.com/bevry" title="Donate to this project using Liberapay"><img src="https://img.shields.io/badge/liberapay-donate-yellow.svg" alt="Liberapay donate button" /></a></span>
