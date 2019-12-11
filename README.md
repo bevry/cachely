@@ -68,8 +68,14 @@ A tiny wrapper that sits around your request function that caches its data for a
 [API Documentation.](http://master.cachely.bevry.surge.sh/docs/)
 
 ```javascript
+// Import cachely
+import Cachely from 'cachely'
+
+// For our retriever, have a locally scoped variable that will showcase the caching
 let fetches = 0
-const cachely = require('cachely').create({
+
+// Create the wrapper retriever in the cachely cache service
+const cachely = new Cachely({
     // The method that will fetch the data
     retrieve() {
         return new Promise(function(resolve) {
@@ -88,7 +94,7 @@ const cachely = require('cachely').create({
     log: console.log
 })
 
-// do an initial fetch of the dat
+// do an initial fetch of the data
 cachely
     .resolve()
     .catch(console.error)
@@ -99,7 +105,7 @@ cachely
         )
     )
 
-// do a subsequent fetch of the data that will be from the cach
+// do a subsequent fetch of the data that will be from the cache
 cachely
     .resolve()
     .catch(console.error)
@@ -110,9 +116,9 @@ cachely
         )
     )
 
-// wait for the cache to invalidate itself
+// wait 3000ms for the cache to invalidate itself
 setTimeout(function() {
-    // do an second fetch of the data
+    // do a second fetch of the data
     cachely
         .resolve()
         .catch(console.error)
