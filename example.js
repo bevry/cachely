@@ -1,7 +1,7 @@
 'use strict'
 
 let fetches = 0
-const cachely = require('./').create({
+const cachely = require('./').default.create({
 	// The method that will fetch the data
 	retrieve() {
 		return new Promise(function(resolve) {

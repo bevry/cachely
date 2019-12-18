@@ -1,3 +1,5 @@
+import oneday from 'oneday'
+
 type Log = (logLevel: string, ...args: any[]) => any
 type Retrieve<Result> = () => Promise<Result>
 type Status = 'valid' | 'invalid' | 'updating' | 'empty'
@@ -29,7 +31,7 @@ export default class Cachely<Result> {
 			)
 		}
 
-		this.duration = opts.duration || require('oneday')
+		this.duration = opts.duration || oneday
 		this.log = opts.log || function() {}
 		this.retrieve = opts.retrieve
 	}
