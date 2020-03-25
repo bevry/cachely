@@ -14,12 +14,12 @@ const fourSeconds = oneSecond * 4
 const tenSeconds = oneSecond * 10
 
 // Task
-kava.suite('cachely', function(suite) {
+kava.suite('cachely', function (suite) {
 	let cachely: Cachely<number>,
 		fetches = 0
 
-	suite('setup', function(suite, test) {
-		test('should fail to instantiate with incorrect setup', function() {
+	suite('setup', function (suite, test) {
+		test('should fail to instantiate with incorrect setup', function () {
 			let err
 			try {
 				// @ts-ignore
@@ -30,28 +30,28 @@ kava.suite('cachely', function(suite) {
 			errorEqual(err, 'Cachely requires a retrieve method to be specified')
 		})
 
-		test('should instantiate successfully with correct setup', function() {
+		test('should instantiate successfully with correct setup', function () {
 			cachely = Cachely.create({
 				retrieve() {
-					return new Promise(function(resolve) {
+					return new Promise(function (resolve) {
 						setTimeout(() => resolve(++fetches), twoSeconds)
 					})
 				},
 				duration: tenSeconds,
-				log: console.log
+				log: console.log,
 			})
 		})
 	})
 
-	suite('fetch', function(suite, test) {
+	suite('fetch', function (suite, test) {
 		let lastRequested: number, lastUpdated: number
 
-		test('should fetch the data successfully', function(next) {
+		test('should fetch the data successfully', function (next) {
 			let result: number,
 				checks = 0
 			cachely
 				.resolve()
-				.then(function(data) {
+				.then(function (data) {
 					result = data
 					equal(
 						data,
@@ -61,7 +61,7 @@ kava.suite('cachely', function(suite) {
 					equal(++checks, 2, 'checks value was as expected')
 				})
 				.catch(next)
-			setTimeout(function() {
+			setTimeout(function () {
 				lastRequested = cachely.lastRequested as number
 				equal(
 					typeChecker.getType(cachely.lastRequested),
@@ -78,7 +78,7 @@ kava.suite('cachely', function(suite) {
 				)
 				equal(++checks, 1, 'checks value was as expected')
 			}, oneSecond)
-			setTimeout(function() {
+			setTimeout(function () {
 				lastUpdated = cachely.lastUpdated as number
 				equal(
 					typeChecker.getType(cachely.lastUpdated),
@@ -88,18 +88,18 @@ kava.suite('cachely', function(suite) {
 				equal(result, 1, 'data should have been received after a while')
 				equal(++checks, 3, 'checks value was as expected')
 			}, threeSeconds)
-			setTimeout(function() {
+			setTimeout(function () {
 				equal(checks, 3, 'all checks for this test occured')
 				next()
 			}, fourSeconds)
 		})
 
-		test('should fetch the data from cache successfully', function(next) {
+		test('should fetch the data from cache successfully', function (next) {
 			let result: number,
 				checks = 0
 			cachely
 				.resolve()
-				.then(function(data) {
+				.then(function (data) {
 					result = data
 					equal(
 						cachely.lastRequested,
@@ -119,7 +119,7 @@ kava.suite('cachely', function(suite) {
 					equal(++checks, 1, 'checks value was as expected')
 				})
 				.catch(next)
-			setTimeout(function() {
+			setTimeout(function () {
 				equal(
 					cachely.lastRequested,
 					lastRequested,
@@ -137,19 +137,19 @@ kava.suite('cachely', function(suite) {
 				)
 				equal(++checks, 2, 'checks value was as expected')
 			}, oneSecond)
-			setTimeout(function() {
+			setTimeout(function () {
 				equal(checks, 2, 'all checks for this test occured')
 				next()
 			}, twoSeconds)
 		})
 
-		test('should invalidate the cache after the duration successfully', function(next) {
-			setTimeout(function() {
+		test('should invalidate the cache after the duration successfully', function (next) {
+			setTimeout(function () {
 				let result: number,
 					checks = 0
 				cachely
 					.resolve()
-					.then(function(data) {
+					.then(function (data) {
 						result = data
 						equal(
 							data,
@@ -159,31 +159,31 @@ kava.suite('cachely', function(suite) {
 						equal(++checks, 2, 'checks value was as expected')
 					})
 					.catch(next)
-				setTimeout(function() {
+				setTimeout(function () {
 					nullish(
 						result,
 						'data has not been fetched yet as it should have taken longer'
 					)
 					equal(++checks, 1, 'checks value was as expected')
 				}, oneSecond)
-				setTimeout(function() {
+				setTimeout(function () {
 					equal(result, 2, 'data should have been received after a while')
 					equal(++checks, 3, 'checks value was as expected')
 				}, threeSeconds)
-				setTimeout(function() {
+				setTimeout(function () {
 					equal(checks, 3, 'all checks for this test occured')
 					next()
 				}, fourSeconds)
 			}, tenSeconds)
 		})
 
-		test('should invalidate the cache after the manual invalidation', function(next) {
+		test('should invalidate the cache after the manual invalidation', function (next) {
 			let result: number,
 				checks = 0
 			cachely
 				.invalidate()
 				.resolve()
-				.then(function(data) {
+				.then(function (data) {
 					result = data
 					equal(
 						data,
@@ -193,29 +193,29 @@ kava.suite('cachely', function(suite) {
 					equal(++checks, 2, 'checks value was as expected')
 				})
 				.catch(next)
-			setTimeout(function() {
+			setTimeout(function () {
 				nullish(
 					result,
 					'data has not been fetched yet as it should have taken longer'
 				)
 				equal(++checks, 1, 'checks value was as expected')
 			}, oneSecond)
-			setTimeout(function() {
+			setTimeout(function () {
 				equal(result, 3, 'data should have been received after a while')
 				equal(++checks, 3, 'checks value was as expected')
 			}, threeSeconds)
-			setTimeout(function() {
+			setTimeout(function () {
 				equal(checks, 3, 'all checks for this test occured')
 				next()
 			}, fourSeconds)
 		})
 
-		test('should fetch the data from cache successfully after manual invalidation', function(next) {
+		test('should fetch the data from cache successfully after manual invalidation', function (next) {
 			let result: number,
 				checks = 0
 			cachely
 				.resolve()
-				.then(function(data) {
+				.then(function (data) {
 					result = data
 					equal(
 						data,
@@ -225,7 +225,7 @@ kava.suite('cachely', function(suite) {
 					equal(++checks, 1, 'checks value was as expected')
 				})
 				.catch(next)
-			setTimeout(function() {
+			setTimeout(function () {
 				equal(
 					result,
 					3,
@@ -233,7 +233,7 @@ kava.suite('cachely', function(suite) {
 				)
 				equal(++checks, 2, 'checks value was as expected')
 			}, oneSecond)
-			setTimeout(function() {
+			setTimeout(function () {
 				equal(checks, 2, 'all checks for this test occured')
 				next()
 			}, twoSeconds)

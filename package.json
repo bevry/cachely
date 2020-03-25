@@ -1,6 +1,6 @@
 {
   "name": "cachely",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "A tiny wrapper that sits around your request function that caches its data for a specified duration, provides updates as requested rather than polling each interval",
   "homepage": "https://github.com/bevry/cachely",
   "license": "MIT",
@@ -62,7 +62,7 @@
     "url": "https://github.com/bevry/cachely.git"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "editions": [
     {
@@ -98,7 +98,7 @@
         "require"
       ],
       "engines": {
-        "node": "8 || 10 || 12 || 13",
+        "node": "10 || 12",
         "browsers": false
       }
     }
@@ -112,20 +112,20 @@
     "oneday": "^3.0.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.12.0",
-    "@typescript-eslint/parser": "^2.12.0",
-    "assert-helpers": "^5.8.0",
-    "eslint": "^6.7.2",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "assert-helpers": "^6.0.0",
+    "eslint": "^6.8.0",
     "eslint-config-bevry": "^2.3.0",
-    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
     "kava": "^4.4.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.2",
     "projectz": "^1.19.0",
     "surge": "^0.21.3",
     "typechecker": "^6.3.0",
-    "typedoc": "^0.15.5",
-    "typescript": "^3.7.3",
+    "typedoc": "^0.17.3",
+    "typescript": "^3.8.3",
     "valid-directory": "^1.6.0",
     "valid-module": "^1.0.0"
   },
@@ -152,7 +152,7 @@
     "our:verify:directory": "valid-directory",
     "our:verify:eslint": "eslint --fix --ignore-pattern '**/*.d.ts' --ignore-pattern '**/vendor/' --ignore-pattern '**/node_modules/' --ext .mjs,.js,.jsx,.ts,.tsx ./source",
     "our:verify:module": "valid-module",
-    "our:verify:prettier": "prettier --write ./source/**",
+    "our:verify:prettier": "prettier --write .",
     "our:verify:typescript": "tsc --noEmit --project tsconfig.json",
     "test": "node ./edition-esnext/test.js"
   },

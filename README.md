@@ -35,7 +35,7 @@ A tiny wrapper that sits around your request function that caches its data for a
 
 ## Usage
 
-
+[Complete API Documentation.](http://master.cachely.bevry.surge.sh/docs/globals.html)
 
 ```javascript
 // Import cachely
@@ -48,7 +48,7 @@ let fetches = 0
 const cachely = new Cachely({
     // The method that will fetch the data
     retrieve() {
-        return new Promise(function(resolve) {
+        return new Promise(function (resolve) {
             // after a one second delay, return the number of fetches that we have done
             setTimeout(() => resolve(++fetches), 1000)
         })
@@ -61,7 +61,7 @@ const cachely = new Cachely({
 
     // An optional function that receives debugging log messages
     // Defaults to nothing
-    log: console.log
+    log: console.log,
 })
 
 // do an initial fetch of the data
@@ -87,7 +87,7 @@ cachely
     )
 
 // wait 3000ms for the cache to invalidate itself
-setTimeout(function() {
+setTimeout(function () {
     // do a second fetch of the data
     cachely
         .resolve()
@@ -137,16 +137,6 @@ setTimeout(function() {
 }, 3000)
 ```
 
-
-
-
-
-
-
-
-
-[Complete API Documentation.](http://master.cachely.bevry.surge.sh/docs/)
-
 <!-- INSTALL/ -->
 
 <h2>Install</h2>
@@ -162,7 +152,7 @@ setTimeout(function() {
 
 ``` html
 <script type="module">
-    import pkg from '//cdn.pika.dev/cachely/^4.0.0'
+    import pkg from '//cdn.pika.dev/cachely/^5.0.0'
 </script>
 ```
 
@@ -170,7 +160,7 @@ setTimeout(function() {
 
 ``` html
 <script type="module">
-    import pkg from '//unpkg.com/cachely@^4.0.0'
+    import pkg from '//unpkg.com/cachely@^5.0.0'
 </script>
 ```
 
@@ -178,7 +168,7 @@ setTimeout(function() {
 
 ``` html
 <script type="module">
-    import pkg from '//dev.jspm.io/cachely@4.0.0'
+    import pkg from '//dev.jspm.io/cachely@5.0.0'
 </script>
 ```
 

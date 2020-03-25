@@ -32,7 +32,7 @@ export default class Cachely<Result> {
 		}
 
 		this.duration = opts.duration || oneday
-		this.log = opts.log || function() {}
+		this.log = opts.log || function () {}
 		this.retrieve = opts.retrieve
 	}
 

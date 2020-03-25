@@ -4,7 +4,7 @@ let fetches = 0
 const cachely = require('./').default.create({
 	// The method that will fetch the data
 	retrieve() {
-		return new Promise(function(resolve) {
+		return new Promise(function (resolve) {
 			// after a one second delay, return the number of fetches that we have done
 			setTimeout(() => resolve(++fetches), 1000)
 		})
@@ -17,7 +17,7 @@ const cachely = require('./').default.create({
 
 	// An optional function that receives debugging log messages
 	// Defaults to nothing
-	log: console.log
+	log: console.log,
 })
 
 // do an initial fetch of the dat
@@ -43,7 +43,7 @@ cachely
 	)
 
 // wait for the cache to invalidate itself
-setTimeout(function() {
+setTimeout(function () {
 	// do an second fetch of the data
 	cachely
 		.resolve()
