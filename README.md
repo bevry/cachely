@@ -152,7 +152,7 @@ setTimeout(function () {
 
 ``` html
 <script type="module">
-    import pkg from '//cdn.pika.dev/cachely/^5.2.0'
+    import pkg from '//cdn.pika.dev/cachely/^5.3.0'
 </script>
 ```
 
@@ -160,7 +160,7 @@ setTimeout(function () {
 
 ``` html
 <script type="module">
-    import pkg from '//unpkg.com/cachely@^5.2.0'
+    import pkg from '//unpkg.com/cachely@^5.3.0'
 </script>
 ```
 
@@ -168,7 +168,7 @@ setTimeout(function () {
 
 ``` html
 <script type="module">
-    import pkg from '//dev.jspm.io/cachely@5.2.0'
+    import pkg from '//dev.jspm.io/cachely@5.3.0'
 </script>
 ```
 
