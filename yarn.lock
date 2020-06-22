@@ -1607,10 +1607,10 @@ once@^1.3.0:
   dependencies:
     wrappy "1"
 
-oneday@4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/oneday/-/oneday-4.4.0.tgz#00aee4e5205fd6274185ab75fcddddbd62b04155"
-  integrity sha512-uDT2FM2VlRuNpDn3gIhpdxxCxZRLrcwbEUk9L9fJUKLAprbsvKEpfse3IOcCssKlRIu8UvvzC8bQYrVOkUZVmg==
+oneday@4.8.0:
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/oneday/-/oneday-4.8.0.tgz#0444538aa203150bbd7e57c79e0178a6f95bf116"
+  integrity sha512-tkzgQ5f6Z/qtKtgH0Urk2h65NwkuZzVqv1IklavEFVamGyVfxBDPADRhbzuLY4GNdldUrlNOTWFYY+wISuA8qA==
 
 onetime@^2.0.0:
   version "2.0.1"
