@@ -35,7 +35,7 @@ A tiny wrapper that sits around your request function that caches its data for a
 
 ## Usage
 
-[Complete API Documentation.](http://master.cachely.bevry.surge.sh/docs/globals.html)
+[Complete API Documentation.](http://master.cachely.bevry.surge.sh/docs/)
 
 ```javascript
 // Import cachely
@@ -152,7 +152,7 @@ setTimeout(function () {
 
 ``` html
 <script type="module">
-    import pkg from '//cdn.skypack.dev/cachely@^5.22.0'
+    import pkg from '//cdn.skypack.dev/cachely@^5.23.0'
 </script>
 ```
 
@@ -160,7 +160,7 @@ setTimeout(function () {
 
 ``` html
 <script type="module">
-    import pkg from '//unpkg.com/cachely@^5.22.0'
+    import pkg from '//unpkg.com/cachely@^5.23.0'
 </script>
 ```
 
@@ -168,7 +168,7 @@ setTimeout(function () {
 
 ``` html
 <script type="module">
-    import pkg from '//dev.jspm.io/cachely@5.22.0'
+    import pkg from '//dev.jspm.io/cachely@5.23.0'
 </script>
 ```
 
