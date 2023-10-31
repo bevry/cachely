@@ -27,7 +27,7 @@ export default class Cachely<Result> {
 	constructor(opts: CachelyOptions<Result>) {
 		if (!opts || typeof opts.retrieve !== 'function') {
 			throw new Error(
-				'Cachely requires a retrieve method to be specified that returns a promise'
+				'Cachely requires a retrieve method to be specified that returns a promise',
 			)
 		}
 

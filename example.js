@@ -27,8 +27,8 @@ cachely
 	.then(
 		console.log.bind(
 			console,
-			'after one second as specified in our method, the result data should still be 1:'
-		)
+			'after one second as specified in our method, the result data should still be 1:',
+		),
 	)
 
 // do a subsequent fetch of the data that will be from the cach
@@ -38,8 +38,8 @@ cachely
 	.then(
 		console.log.bind(
 			console,
-			'after a tiny delay this will be from cache, the result data should still be 1:'
-		)
+			'after a tiny delay this will be from cache, the result data should still be 1:',
+		),
 	)
 
 // wait for the cache to invalidate itself
@@ -51,8 +51,8 @@ setTimeout(function () {
 		.then(
 			console.log.bind(
 				console,
-				'after one second as specified in our method, the result data should be 2, as it was our second fetch:'
-			)
+				'after one second as specified in our method, the result data should be 2, as it was our second fetch:',
+			),
 		)
 
 	// do a subsequent fetch of the data that will be from the cache
@@ -62,8 +62,8 @@ setTimeout(function () {
 		.then(
 			console.log.bind(
 				console,
-				'after a tiny delay this will be from cache, the result data should still be 2:'
-			)
+				'after a tiny delay this will be from cache, the result data should still be 2:',
+			),
 		)
 
 	// peform a manual invalidation
@@ -76,8 +76,8 @@ setTimeout(function () {
 		.then(
 			console.log.bind(
 				console,
-				'after one second as specified in our method, the result data should be 3, as it was our third fetch:'
-			)
+				'after one second as specified in our method, the result data should be 3, as it was our third fetch:',
+			),
 		)
 
 	// do a subsequent fetch of the data that will be from the cache
@@ -87,7 +87,7 @@ setTimeout(function () {
 		.then(
 			console.log.bind(
 				console,
-				'after a tiny delay this will be from cache, the result data should still be 3:'
-			)
+				'after a tiny delay this will be from cache, the result data should still be 3:',
+			),
 		)
 }, 3000)
