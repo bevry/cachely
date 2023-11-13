@@ -56,7 +56,7 @@ kava.suite('cachely', function (suite) {
 					equal(
 						data,
 						1,
-						'data from cachely was as expected for the first fetching',
+						'data from cachely was as expected for the first fetching'
 					)
 					equal(++checks, 2, 'checks value was as expected')
 				})
@@ -66,15 +66,15 @@ kava.suite('cachely', function (suite) {
 				equal(
 					typeChecker.getType(cachely.lastRequested),
 					'number',
-					'last requested should exist, as the request has been made',
+					'last requested should exist, as the request has been made'
 				)
 				nullish(
 					cachely.lastUpdated,
-					'last updated should be empty, as it should take a while',
+					'last updated should be empty, as it should take a while'
 				)
 				nullish(
 					result,
-					'data has not been fetched yet as it should have taken longer',
+					'data has not been fetched yet as it should have taken longer'
 				)
 				equal(++checks, 1, 'checks value was as expected')
 			}, oneSecond)
@@ -83,7 +83,7 @@ kava.suite('cachely', function (suite) {
 				equal(
 					typeChecker.getType(cachely.lastUpdated),
 					'number',
-					'updated should exist, as the data should now be resolved',
+					'updated should exist, as the data should now be resolved'
 				)
 				equal(result, 1, 'data should have been received after a while')
 				equal(++checks, 3, 'checks value was as expected')
@@ -104,17 +104,17 @@ kava.suite('cachely', function (suite) {
 					equal(
 						cachely.lastRequested,
 						lastRequested,
-						'last requested should be the same, as the cache was used',
+						'last requested should be the same, as the cache was used'
 					)
 					equal(
 						cachely.lastUpdated,
 						lastUpdated,
-						'last updated should be the same, as the cache was used',
+						'last updated should be the same, as the cache was used'
 					)
 					equal(
 						data,
 						1,
-						'data from cachely was as expected for the cached result of the first fetch',
+						'data from cachely was as expected for the cached result of the first fetch'
 					)
 					equal(++checks, 1, 'checks value was as expected')
 				})
@@ -123,17 +123,17 @@ kava.suite('cachely', function (suite) {
 				equal(
 					cachely.lastRequested,
 					lastRequested,
-					'last requested should be the same, as the cache was used',
+					'last requested should be the same, as the cache was used'
 				)
 				equal(
 					cachely.lastUpdated,
 					lastUpdated,
-					'last updated should be the same, as the cache was used',
+					'last updated should be the same, as the cache was used'
 				)
 				equal(
 					result,
 					1,
-					'data should have been received quickly as we got it from the cache',
+					'data should have been received quickly as we got it from the cache'
 				)
 				equal(++checks, 2, 'checks value was as expected')
 			}, oneSecond)
@@ -154,7 +154,7 @@ kava.suite('cachely', function (suite) {
 						equal(
 							data,
 							2,
-							'data from cachely was as expected for the second fetching',
+							'data from cachely was as expected for the second fetching'
 						)
 						equal(++checks, 2, 'checks value was as expected')
 					})
@@ -162,7 +162,7 @@ kava.suite('cachely', function (suite) {
 				setTimeout(function () {
 					nullish(
 						result,
-						'data has not been fetched yet as it should have taken longer',
+						'data has not been fetched yet as it should have taken longer'
 					)
 					equal(++checks, 1, 'checks value was as expected')
 				}, oneSecond)
@@ -188,7 +188,7 @@ kava.suite('cachely', function (suite) {
 					equal(
 						data,
 						3,
-						'data from cachely was as expected for the third fetching',
+						'data from cachely was as expected for the third fetching'
 					)
 					equal(++checks, 2, 'checks value was as expected')
 				})
@@ -196,7 +196,7 @@ kava.suite('cachely', function (suite) {
 			setTimeout(function () {
 				nullish(
 					result,
-					'data has not been fetched yet as it should have taken longer',
+					'data has not been fetched yet as it should have taken longer'
 				)
 				equal(++checks, 1, 'checks value was as expected')
 			}, oneSecond)
@@ -220,7 +220,7 @@ kava.suite('cachely', function (suite) {
 					equal(
 						data,
 						3,
-						'data from cachely was as expected for the cached result of the first fetch',
+						'data from cachely was as expected for the cached result of the first fetch'
 					)
 					equal(++checks, 1, 'checks value was as expected')
 				})
@@ -229,7 +229,7 @@ kava.suite('cachely', function (suite) {
 				equal(
 					result,
 					3,
-					'data should have been received quickly as we got it from the cache',
+					'data should have been received quickly as we got it from the cache'
 				)
 				equal(++checks, 2, 'checks value was as expected')
 			}, oneSecond)
